@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os.path
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -20,12 +22,12 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'vgvcn*!nl=dr&0gc%dyo#&e838w$82v+8s5^g=+(1)ulsda8za'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS').split(',')
 
 
 # Application definition
@@ -80,12 +82,12 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'blog',
-        'USER': 'janat',
-        'PASSWORD': '1',
-        'HOST': 'localhost',
-        'PORT': 5432
+        'ENGINE': config('DB_ENGINE'),
+        'NAME':config('DB_NAME') ,
+        'USER':config('DB_USER') ,
+        'PASSWORD':config('DB_PASSWORD') ,
+        'HOST':config('DB_HOST') ,
+        'PORT':config('DB_PORT', cast=int)
     }
 }
 
@@ -133,12 +135,12 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'janat.200066@gmail.com'
-EMAIL_HOST_PASSWORD = 'zpvuyuzkcbkbrnrb'
+EMAIL_BACKEND = config('EMAIL_BACKEND')
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index-page'
