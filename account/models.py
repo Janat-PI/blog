@@ -13,7 +13,7 @@ class UserManager(BaseUserManager):
 
     def create(self, email, password, **extra_fields):
         extra_fields.setdefault('is_staff', 'False')
-        return self._create_user(self, email, password, **extra_fields)
+        return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
         extra_fields.setdefault('is_active', True)
@@ -40,13 +40,13 @@ class user(AbstractBaseUser):
         return f'{self.email}'
 
     def create_activation_code(self):
-        from django.utils.crypto import  get_random_string
-        code = get_random_string(8,'0123456789')
+        from django.utils.crypto import get_random_string
+        code = get_random_string(8, '0123456789')
         self.activation_code = code
         self.save()
 
     def has_module_perms(self, app_label):
         return self.is_staff
 
-    def has_perm(self, perm,  obg = None):
+    def has_perm(self, perm,  obg=None):
         return self.is_staff

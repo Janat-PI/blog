@@ -16,11 +16,20 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from main import views
+from main.views import PostDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.IndexPageView.as_view(), name='index-page'),
+    path('posts/<slug:category>/', views.PostListView.as_view(),
+         name='posts-list'),
+    path('post/details/<int:pk>', PostDetailView.as_view(),
+         name='post-details'),
+    path('accounts/', include('account.urls')),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)

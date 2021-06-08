@@ -12,6 +12,7 @@ class PostAdminForm(forms.ModelForm):
         model = Post
         fields = '__all__'
 
+
 class PostAdmin(admin.ModelAdmin):
     form = PostAdminForm
 
