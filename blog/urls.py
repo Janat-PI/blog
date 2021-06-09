@@ -22,12 +22,8 @@ from main.views import PostDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.IndexPageView.as_view(), name='index-page'),
-    path('posts/<slug:category>/', views.PostListView.as_view(),
-         name='posts-list'),
-    path('post/details/<int:pk>', PostDetailView.as_view(),
-         name='post-details'),
     path('accounts/', include('account.urls')),
+    path('', include('main.urls'))
 ]
 
 if settings.DEBUG:
