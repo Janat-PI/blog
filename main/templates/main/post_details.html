@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block body %}
   <p>{{ post.title }}</p>
-  <p>{{ post.description }}</p>
+  <p>{{ post.text|safe }}</p>
   {% if post.image %}
   <img src="{{ post.image.url }}">
   {% endif %}
@@ -11,5 +11,7 @@
       <span> {{ tag.title }} </span>
     {% endfor %}
   </p>
+
+  <p><a href="{% url 'edit-post' post.id %}">Редактировать</a> <a href="{% url 'delete-post' post.id %}"> Удалить </a> </p>
 {% endblock body %}
 
